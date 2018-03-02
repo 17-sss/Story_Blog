@@ -33,7 +33,7 @@
 	
 	diary.setEmail((String)session.getAttribute("sessionID")); 
 	dbPro.insertDiary(diary);
-	response.sendRedirect("list.jsp?pageNum="+pageNum+"&diaryid="+diaryid);
+	response.sendRedirect("user_timeline.jsp?pageNum="+pageNum+"&diaryid="+diaryid);
 %>
 </body>
 </html>

@@ -61,7 +61,9 @@ public class DiaryDBBean {
 			if (rs.next())
 				number = rs.getInt(1) + 1;
 			else number = 1;
-			System.out.println(diary.getEmail());
+			
+			System.out.println(diary.getEmail()); // Test
+			
 			sql = "insert into diary(num, email, diaryid, subject, cdate, content, ip)";
 			sql += "values(?,?,?,?, sysdate, ?, ?)";
 			
@@ -85,9 +87,9 @@ public class DiaryDBBean {
 	}
 	
 	// 각 일기장의 일기 수
-	public int getDiaryCount(String diaryid) throws SQLException {
+	public int getDiaryCount(String diaryid, String email) throws SQLException {
 		int x = 0;
-		String sql = "SELECT nvl(count(*),0) FROM diary WHERE diaryid = ?";
+		String sql = "SELECT nvl(count(*),0) FROM diary WHERE diaryid = ? and email=?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -96,6 +98,7 @@ public class DiaryDBBean {
 		try {
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, diaryid);
+		pstmt.setString(2, email);
 		
 		rs = pstmt.executeQuery();
 		if (rs.next()) { x = rs.getInt(1); }
@@ -114,12 +117,15 @@ public class DiaryDBBean {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List diaryList = null;
+		
+		System.out.println(startRow+":"+endRow+"/"+email+"/"+diaryid); // Test
+		
 		String sql = "";
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rnum, b.* from (select num, email, diaryid, subject, cdate, content, ip"
+			sql = "select * from (select rownum rnum, b.* from (select num, email, diaryid, subject, cdate, content, ip "
 					+ "from diary where diaryid = ? and email = ?) b) where rnum between ? and ? order by cdate desc";
-			
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, diaryid);
 			pstmt.setString(2, email);
