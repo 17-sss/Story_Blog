@@ -27,6 +27,7 @@
         { 
             // 세션에 현재 아이디 세팅
             session.setAttribute("sessionID", email);
+            session.setAttribute("usernum", user_num);
             /* msg = "MainForm.jsp"; */
             msg="/Story_Blog/Project/view/user_main.jsp";
         }

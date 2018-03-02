@@ -12,11 +12,21 @@
 	    //콘솔 출력
 	    System.out.println("제목:"+subject);   
 %>
+<% 
+		int num=0;
+		String diaryid = request.getParameter("diaryid");
+
+		if (diaryid==null) diaryid = "Main";
+
+		if (request.getParameter("num")!=null) {
+			num = Integer.parseInt(request.getParameter("num"));
+		}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>SmartEditor</title>
+<title>Story Blog - User Write</title>
 <style type="text/css">
 	.w3-input {
 		padding: 8px;
@@ -76,7 +86,11 @@
 <div>&nbsp;
 	<!-- form -->
 	
-	<form id="frm" action="user_content.jsp" method="post">
+	<form id="frm" action="<%=request.getContextPath()%>/Project/view/user_writePro.jsp" method="post">
+	<input type="hidden" name="diaryid" value="<%= diaryid %>">
+	<input type="hidden" name="num" value="<%= num %>">
+	<input type="hidden" name="user_num" value="<%= user_num %>">
+		
 		<!-- 상단 바, 사이드 바 간격 -->
 		<div style="margin-top:54px; margin-left: 10%;"><br>
 			
@@ -134,7 +148,8 @@
 						<!-- filename, size는 나중에..ㅠㅠㅠ -->
 						
 						<!-- 전송 -->
-						<div class="w3-center" style="margin: 1%;">	
+						<div class="w3-center" style="margin: 1%;">
+							<input class="w3-button w3-blue" type="submit" value="전송" />
 							<input class="w3-button w3-blue" type="button" id="save" value="저장" />
 							<input class="w3-button w3-yellow" type="button" value="취소" onClick = "history.back();"/>
 						</div>

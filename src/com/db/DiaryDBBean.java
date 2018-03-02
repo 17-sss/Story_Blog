@@ -61,17 +61,20 @@ public class DiaryDBBean {
 			if (rs.next())
 				number = rs.getInt(1) + 1;
 			else number = 1;
-			
+			System.out.println(diary.getUser_num());
 			sql = "insert into diary(num, user_num, diaryid, subject, cdate, content, ip)";
 			sql += "values(?,?,?,?, sysdate, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
-			pstmt.setInt(2, diary.getUser_num()); // !!
+			pstmt.setInt(2, diary.getEmail()); // !!
 			pstmt.setString(3, diary.getDiaryid());
 			pstmt.setString(4, diary.getSubject());
 			pstmt.setString(5, diary.getContent());
 			pstmt.setString(6, diary.getIp());
+			
+			String userid = "나"
+			select * from 다이어리 where 다이어리userno = (select userno from 유저리스트 where 유저리스트.userid = #{userid})
 
 			pstmt.executeUpdate();
 			
@@ -220,13 +223,14 @@ public class DiaryDBBean {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "delete from diary where num=? and user_num = ?";
+		String sql = "delete from diary where num=? and user_num = ? and diaryid =?";
 		int x = -1;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2, user_num);
+			pstmt.setString(3, diaryid);
 			x=pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
