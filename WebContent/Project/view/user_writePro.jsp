@@ -12,8 +12,10 @@
 <%
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null || pageNum == "") {
-		pageNum = "1";
-	}
+		pageNum = "1";	}
+	
+	
+	
 	String diaryid = request.getParameter("diaryid");
 	if (diaryid==null) diaryid = "Main";
 %>
@@ -21,12 +23,15 @@
 <jsp:useBean id="diary" class="com.db.DiaryDataBean">
 <jsp:setProperty name="diary" property="*"/>
 </jsp:useBean>
+
+
 <% System.out.println(diary); %>
 <%
 	DiaryDBBean dbPro = DiaryDBBean.getInstance();
-
+    
 	diary.setIp(request.getRemoteAddr());
-	diary.setEmail(session.getAttribute("sessionid"));
+	
+	diary.setEmail((String)session.getAttribute("sessionID")); 
 	dbPro.insertDiary(diary);
 	response.sendRedirect("list.jsp?pageNum="+pageNum+"&diaryid="+diaryid);
 %>

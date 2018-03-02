@@ -61,21 +61,19 @@ public class DiaryDBBean {
 			if (rs.next())
 				number = rs.getInt(1) + 1;
 			else number = 1;
-			System.out.println(diary.getUser_num());
-			sql = "insert into diary(num, user_num, diaryid, subject, cdate, content, ip)";
+			System.out.println(diary.getEmail());
+			sql = "insert into diary(num, email, diaryid, subject, cdate, content, ip)";
 			sql += "values(?,?,?,?, sysdate, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
-			pstmt.setInt(2, diary.getEmail()); // !!
+			pstmt.setString(2, diary.getEmail()); // !!
 			pstmt.setString(3, diary.getDiaryid());
 			pstmt.setString(4, diary.getSubject());
 			pstmt.setString(5, diary.getContent());
 			pstmt.setString(6, diary.getIp());
 			
-			String userid = "나"
-			select * from 다이어리 where 다이어리userno = (select userno from 유저리스트 where 유저리스트.userid = #{userid})
-
+			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -111,7 +109,7 @@ public class DiaryDBBean {
 	}
 	
 	// 일기(목록) 가져오기
-	public List getDiaries(int startRow, int endRow, int user_num, String diaryid) {
+	public List getDiaries(int startRow, int endRow, String email, String diaryid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -119,12 +117,12 @@ public class DiaryDBBean {
 		String sql = "";
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rnum, b.* from (select num, user_num, diaryid, subject, cdate, content, ip"
-					+ "from diary where diaryid = ? and user_num = ?) b) where rnum between ? and ? order by cdate desc";
+			sql = "select * from (select rownum rnum, b.* from (select num, email, diaryid, subject, cdate, content, ip"
+					+ "from diary where diaryid = ? and email = ?) b) where rnum between ? and ? order by cdate desc";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, diaryid);
-			pstmt.setInt(2, user_num);
+			pstmt.setString(2, email);
 			pstmt.setInt(3, startRow);
 			pstmt.setInt(4, endRow);
 			rs = pstmt.executeQuery();
@@ -134,7 +132,7 @@ public class DiaryDBBean {
 				do {
 					DiaryDataBean diary = new DiaryDataBean();
 					diary.setNum(rs.getInt("num"));
-					diary.setUser_num(rs.getInt("user_num"));
+					diary.setEmail(rs.getString("email"));
 					diary.setDiaryid(rs.getString("diaryid"));
 					diary.setSubject(rs.getString("subject"));
 					diary.setCdate(rs.getTimestamp("cdate"));
@@ -153,7 +151,7 @@ public class DiaryDBBean {
 	}
 	
 	// 일기 수정할때 정보 불러옴.
-	public DiaryDataBean getDiary(int num, int user_num, String diaryid) {
+	public DiaryDataBean getDiary(int num, String email, String diaryid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -161,17 +159,17 @@ public class DiaryDBBean {
 		String sql = "";
 		try {
 			conn = getConnection();
-			sql="select * from diary where num = ? and user_num = ? and diaryid = ?";
+			sql="select * from diary where num = ? and email = ? and diaryid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			pstmt.setInt(2, user_num);
+			pstmt.setString(2, email);
 			pstmt.setString(3, diaryid);
 			rs=pstmt.executeQuery();
 			
 			diary = new DiaryDataBean();
 			if(rs.next()) {
 				diary.setNum(rs.getInt("num"));
-				diary.setUser_num(rs.getInt("user_num"));
+				diary.setEmail(rs.getString("email"));
 				diary.setDiaryid(rs.getString("diaryid"));
 				diary.setSubject(rs.getString("subject"));
 				diary.setCdate(rs.getTimestamp("cdate"));
@@ -198,14 +196,14 @@ public class DiaryDBBean {
 		
 		try {
 			conn = getConnection();
-			sql = "update diary set diaryid=?, subject=?, content=? where num=? and user_num = ?";
+			sql = "update diary set diaryid=?, subject=?, content=? where num=? and email = ?";
 			pstmt = conn.prepareStatement(sql);
 		
 			pstmt.setString(1, diary.getDiaryid());
 			pstmt.setString(2, diary.getSubject());
 			pstmt.setString(3, diary.getContent());
 			pstmt.setInt(4, diary.getNum());
-			pstmt.setInt(5, diary.getUser_num());
+			pstmt.setString(5, diary.getEmail());
 			
 			chk = pstmt.executeUpdate(); //컬럼이 업데이트가 되었을때 숫자를 반환
 			pstmt.executeUpdate();
@@ -219,17 +217,17 @@ public class DiaryDBBean {
 		
 	}
 	
-	public int deleteDiary (int num, int user_num, String diaryid) throws Exception {
+	public int deleteDiary (int num, String email, String diaryid) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "delete from diary where num=? and user_num = ? and diaryid =?";
+		String sql = "delete from diary where num=? and email = ? and diaryid =?";
 		int x = -1;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			pstmt.setInt(2, user_num);
+			pstmt.setString(2, email);
 			pstmt.setString(3, diaryid);
 			x=pstmt.executeUpdate();
 		} catch (Exception ex) {

@@ -1,4 +1,5 @@
 <!-- 작성 글 뷰어. -->
+<!-- 테스트용. 데이터베이스 통해불러오는게 아님. -->
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%                                                

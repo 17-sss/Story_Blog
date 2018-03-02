@@ -42,43 +42,7 @@
 <!-- jQuery를 사용하기위해 jQuery라이브러리 추가 -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<script type="text/javascript">
-	var oEditors = [];
-	$(function() {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "ir1", //textarea에서 지정한 id와 일치해야 합니다. 
 
-				//SmartEditor2Skin.html 파일이 존재하는 경로
-				sSkinURI : "/Story_Blog/SE2/SmartEditor2Skin.html",
-
-				htParams : {
-					// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseToolbar : true,
-					// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseVerticalResizer : true,
-					// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseModeChanger : true,
-					fOnBeforeUnload : function() {
-					}
-				},
-				
-				fOnAppLoad : function() {
-					//기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
-					oEditors.getById["ir1"].exec("PASTE_HTML",
-							[ "기존 DB에 저장된 내용을 에디터에 적용할 문구" ]);
-				},
-				
-				fCreator : "createSEditor2"
-		});
-
-		//저장버튼 클릭시 form 전송
-		$("#save").click(function() {
-			oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-			$("#frm").submit();
-		});
-	});
-</script>
 
 </head>
 <body>
@@ -89,7 +53,6 @@
 	<form id="frm" action="<%=request.getContextPath()%>/Project/view/user_writePro.jsp" method="post">
 	<input type="hidden" name="diaryid" value="<%= diaryid %>">
 	<input type="hidden" name="num" value="<%= num %>">
-	<input type="hidden" name="user_num" value="<%= user_num %>">
 		
 		<!-- 상단 바, 사이드 바 간격 -->
 		<div style="margin-top:54px; margin-left: 10%;"><br>
@@ -116,7 +79,7 @@
 							<div class="w3-row w3-section">
 								<div class="w3-content">
 				 					제목 
-									&nbsp;<input class="w3-input" name="subject" type="text" size="60" value="<%=subject %>">
+									&nbsp;<input class="w3-input" name="subject" type="text" size="60" value="<%=subject %>" />
 								</div>
 							</div>
 							
@@ -131,8 +94,7 @@
 							<!-- 내용 (SE2) -->
 							<div class="w3-row w3-section">
 								<div class="w3-content">&nbsp;내용
-									<textarea id="ir1" class="w3-input w3-border" rows="10" cols="30"
-										name="content">
+									<textarea  id="ir1" class="w3-input w3-border" rows="10" cols="30" 	name="content">
 									</textarea>
 									<!-- <textarea id="ir1" class="w3-input w3-border" rows="10" cols="30"
 										style="width: 950px; height: 400px;" name="content">
@@ -149,7 +111,8 @@
 						
 						<!-- 전송 -->
 						<div class="w3-center" style="margin: 1%;">
-							<input class="w3-button w3-blue" type="submit" value="전송" />
+							<input class="w3-button w3-white" type="button" onclick="submitContents(this);" value="전송전송" />
+							<!-- <input class="w3-button w3-blue" type="submit" value="전송" /> -->
 							<input class="w3-button w3-blue" type="button" id="save" value="저장" />
 							<input class="w3-button w3-yellow" type="button" value="취소" onClick = "history.back();"/>
 						</div>
@@ -165,6 +128,58 @@
 	<!-- end. form -->
 	
 </div>
+<script type="text/javascript">
+	var oEditors = [];
+	
+	//추가 글꼴 목록
+	//var aAdditionalFontSet = [["MS UI Gothic", "MS UI Gothic"], ["Comic Sans MS", "Comic Sans MS"],["TEST","TEST"]];
+	
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: oEditors,
+		elPlaceHolder: "ir1",
+		sSkinURI: "/Story_Blog/SE2/SmartEditor2Skin.html",	
+		htParams : {
+			bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+			bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+			bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+			//aAdditionalFontList : aAdditionalFontSet,		// 추가 글꼴 목록
+			fOnBeforeUnload : function(){
+				//alert("완료!");
+			}
+		}, //boolean
+		fOnAppLoad : function(){
+			//예제 코드
+			//oEditors.getById["ir1"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+		},
+		fCreator: "createSEditor2"
+	});
+	
+	function pasteHTML() {
+		var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+		oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
+	}
+	
+	function showHTML() {
+		var sHTML = oEditors.getById["ir1"].getIR();
+		alert(sHTML);
+	}
+		
+	function submitContents(elClickedObj) {
+		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+		
+		// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+		
+		try {
+			elClickedObj.form.submit();
+		} catch(e) {}
+	}
+	
+	function setDefaultFont() {
+		var sDefaultFont = '궁서';
+		var nFontSize = 24;
+		oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
+	}
+</script>
 <!-- end. 전체 틀 div ★ --> 
 </body>
 </html>

@@ -55,25 +55,18 @@ public class UserDBBean {
 		
 		int number=0;
 		try {
-			pstmt = conn.prepareStatement("select userSer.nextval from dual");
-			rs = pstmt.executeQuery();
-			if (rs.next())
-				number = rs.getInt(1) + 1;
-			else number = 1;
 			
-			sql = "insert into userlist(num, email, name, pwd, tel, birth, cdate, ip)";
-			sql += "values(?,?,?,?,?,?, sysdate, ?)";
 			
+			sql = "insert into userlist(email, name, pwd, tel, birth, cdate, ip)";
+			sql += "values(?,?,?,?,?, sysdate, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, number);
-			pstmt.setString(2, user.getEmail());
-			pstmt.setString(3, user.getName());
-			pstmt.setString(4, user.getPwd());
-			pstmt.setString(5, user.getTel());
-			pstmt.setString(6, user.getBirth());
-			pstmt.setString(7, user.getIp());
-
-			pstmt.executeUpdate();
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getName());
+			pstmt.setString(3, user.getPwd());
+			pstmt.setString(4, user.getTel());
+			pstmt.setString(5, user.getBirth());
+			pstmt.setString(6, user.getIp());
+		    pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,7 +108,7 @@ public class UserDBBean {
 		String sql = "";
 		try {
 			conn = getConnection();
-			sql = "select * from (select rownum rnum, a.* from (select num, email, name, pwd, tel, birth, cdate, ip from userlist)"
+			sql = "select * from (select rownum rnum, a.* from (select email, name, pwd, tel, birth, cdate, ip from userlist)"
 					+ " a) where rnum between ? and ? order by cdate desc";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -128,7 +121,6 @@ public class UserDBBean {
 			
 				do {
 					UserDataBean user = new UserDataBean();
-					user.setNum(rs.getInt("num"));
 					user.setEmail(rs.getString("email"));
 					user.setName(rs.getString("name"));
 					user.setPwd(rs.getString("pwd"));
@@ -165,7 +157,6 @@ public class UserDBBean {
 			
 			user = new UserDataBean();
 			if(rs.next()) {
-				user.setNum(rs.getInt("num"));
 				user.setEmail(rs.getString("email"));
 				user.setName(rs.getString("name"));
 				user.setPwd(rs.getString("pwd"));
@@ -258,7 +249,7 @@ public class UserDBBean {
 		
 		try {
 			conn = getConnection();
-			sql = "update userlist set email=?, name=?, pwd=?, tel=?, birth=? where num=?";
+			sql = "update userlist set email=?, name=?, pwd=?, tel=?, birth=? where email=?";
 			pstmt = conn.prepareStatement(sql);
 		
 			pstmt.setString(1, user.getEmail());
@@ -266,7 +257,7 @@ public class UserDBBean {
 			pstmt.setString(3, user.getPwd());
 			pstmt.setString(4, user.getTel());
 			pstmt.setString(5, user.getBirth());
-			pstmt.setInt(6, user.getNum());
+			pstmt.setString(6, user.getEmail());
 			
 			chk = pstmt.executeUpdate(); //컬럼이 업데이트가 되었을때 숫자를 반환
 			/*pstmt.executeUpdate(); <- 썼던거.*/
