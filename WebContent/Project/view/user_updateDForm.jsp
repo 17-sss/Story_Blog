@@ -11,18 +11,16 @@
 %>
 <%
 	String diaryid = request.getParameter("diaryid");
-	if (diaryid==null) diaryid="1";
+	if (diaryid==null) diaryid="Main";
 	String pageNum = request.getParameter("pageNum");
 		if (pageNum == null || pageNum == "") { 
 			pageNum = "1"; 
 		}
 %>
 <% 
-
 	int num = Integer.parseInt(request.getParameter("num"));
 
-	String email=request.getParameter("email");
-	String pwd=request.getParameter("pwd");
+	/* String email=request.getParameter("email"); */
 	
 	try {
 		DiaryDBBean diaryPro = DiaryDBBean.getInstance();
@@ -56,9 +54,10 @@
 <div>&nbsp;
 	<!-- form -->
 	
-	<form id="frm" action="<%=request.getContextPath()%>/Project/view/user_writePro.jsp" method="post">
+	<form id="frm" action="<%=request.getContextPath()%>/Project/view/user_updateDPro.jsp" method="post">
 	<input type="hidden" name="diaryid" value="<%= diaryid %>">
 	<input type="hidden" name="num" value="<%= num %>">
+	<input type="hidden" name="pageNum" value="<%= pageNum %>">
 		
 		<!-- 상단 바, 사이드 바 간격 -->
 		<div style="margin-top:54px; margin-left: 10%;"><br>
@@ -85,7 +84,7 @@
 							<div class="w3-row w3-section">
 								<div class="w3-content">
 				 					제목 
-									&nbsp;<input class="w3-input" name="subject" type="text" size="60" value="<%=subject %>" />
+									&nbsp;<input class="w3-input" name="subject" type="text" size="60" value="<%=diary.getSubject() %>" />
 								</div>
 							</div>
 							
@@ -93,7 +92,7 @@
 							<div class="w3-row w3-section">
 								<div class="w3-content">
 				 					날짜
-									&nbsp;<input class="w3-input" name="t_date" type="date">
+									&nbsp;<input class="w3-input" name="cdate" type="text" value="<%=diary.getCdate() %>" >
 								</div>
 							</div>
 							

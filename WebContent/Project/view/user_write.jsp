@@ -87,7 +87,7 @@
 							<div class="w3-row w3-section">
 								<div class="w3-content">
 				 					³¯Â¥
-									&nbsp;<input class="w3-input" name="t_date" type="date">
+									&nbsp;<input class="w3-input" name="cdate" type="date">
 								</div>
 							</div>
 							
