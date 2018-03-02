@@ -73,8 +73,6 @@ public class UserDBBean {
 			pstmt.setString(6, user.getBirth());
 			pstmt.setString(7, user.getIp());
 
-			
-			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

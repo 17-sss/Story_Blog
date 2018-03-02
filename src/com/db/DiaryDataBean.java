@@ -4,9 +4,10 @@ import java.util.Date;
 
 public class DiaryDataBean {
 	private int num; // 일기 고유번호
-	private String diaryid; // 일기장 번호(일기장 리스트) 
+	private int user_num; // 회원 고유번호 (Userlist 테이블 참조키)
+	private String diaryid; // 일기장 고유 명 (일기장 리스트) 
 	private String subject; // 제목
-	private Date reg_date; // 날짜
+	private Date cdate; // 날짜
 	private String content; // 내용
 	private String ip; // 아이피
 	private String filename; // 파일이름
@@ -16,6 +17,12 @@ public class DiaryDataBean {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	public int getUser_num() {
+		return user_num;
+	}
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
 	}
 	public String getDiaryid() {
 		return diaryid;
@@ -29,11 +36,11 @@ public class DiaryDataBean {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public Date getReg_date() {
-		return reg_date;
+	public Date getCdate() {
+		return cdate;
 	}
-	public void setReg_date(Date reg_date) {
-		this.reg_date = reg_date;
+	public void setCdate(Date cdate) {
+		this.cdate = cdate;
 	}
 	public String getContent() {
 		return content;
@@ -62,9 +69,13 @@ public class DiaryDataBean {
 	
 	@Override
 	public String toString() {
-		return "DiaryDataBean [num=" + num + ", diaryid=" + diaryid + ", subject=" + subject + ", reg_date=" + reg_date
-				+ ", content=" + content + ", ip=" + ip + ", filename=" + filename + ", filesize=" + filesize + "]";
+		return "DiaryDataBean [num=" + num + ", user_num=" + user_num + ", diaryid=" + diaryid + ", subject=" + subject
+				+ ", cdate=" + cdate + ", content=" + content + ", ip=" + ip + ", filename=" + filename + ", filesize="
+				+ filesize + "]";
 	}
+	
+	
+	
 	
 	
 	
