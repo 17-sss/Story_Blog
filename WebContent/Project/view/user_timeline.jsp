@@ -110,7 +110,7 @@
 			<img src="<%=request.getContextPath()%>/Project/img/Kirby_1.png" alt="kirby1" class="w3-left w3-circle w3-margin-right"
 				style="width: 60px"> 
 			
-			<span class="w3-right w3-text-gray"><%=sdf.format(diary.getCdate()) %></span>
+			<span class="w3-right w3-text-gray"><%=sdf.format(diary.getCdate()) %><%-- <%=diary.getCdate() %> --%></span>
 			
 			<b>Á¦¸ñ:</b> <%=diary.getSubject()%>
 			

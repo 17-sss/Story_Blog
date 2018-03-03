@@ -5,7 +5,7 @@
 	pageEncoding="EUC-KR"%>
 <%
 	String ctx = request.getContextPath(); //콘텍스트명 얻어오기.
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	//제대로 utf-8환경이 아니라 한글 깨짐 그래서 임의로 추가
 	request.setCharacterEncoding("EUC-KR");
 %>
@@ -55,10 +55,7 @@
 	<!-- form -->
 	
 	<form id="frm" action="<%=request.getContextPath()%>/Project/view/user_updateDPro.jsp" method="post">
-	<input type="hidden" name="diaryid" value="<%= diaryid %>">
-	<input type="hidden" name="num" value="<%= num %>">
-	<input type="hidden" name="pageNum" value="<%= pageNum %>">
-		
+	
 		<!-- 상단 바, 사이드 바 간격 -->
 		<div style="margin-top:54px; margin-left: 10%;"><br>
 			
@@ -76,7 +73,7 @@
 							<div class="w3-row w3-section">
 								<div class="w3-content">
 				 					일기장 선택
-									&nbsp;<input class="w3-input" name="diaryid" type="text">
+									&nbsp;<input class="w3-input" name="diaryid" type="text" value="<%=diary.getDiaryid()%>"/>
 								</div>
 							</div>
 	
@@ -88,18 +85,25 @@
 								</div>
 							</div>
 							
-							<!-- 날짜 지정  or reg_date(고정으로) 활용  -->
+							<!-- 날짜   / 날짜 수정 불가..방법이.. -->
 							<div class="w3-row w3-section">
 								<div class="w3-content">
-				 					날짜
-									&nbsp;<input class="w3-input" name="cdate" type="text" value="<%=diary.getCdate() %>" >
+				 					날짜 
+									&nbsp;<span class="w3-input w3-light-gray w3-text-gray" style="font-size: 9pt;">처음 만든 시간으로 등록됩니다.</span>
 								</div>
 							</div>
+							<%-- <div class="w3-row w3-section">
+								<div class="w3-content">
+				 					날짜
+									&nbsp;<input class="w3-input w3-light-gray" name="cdate" type="text" value="<%=sdf.format(diary.getCdate()) %>" readonly>
+								</div>
+							</div> --%>
 							
 							<!-- 내용 (SE2) -->
 							<div class="w3-row w3-section">
 								<div class="w3-content">&nbsp;내용
 									<textarea  id="ir1" class="w3-input w3-border" rows="10" cols="30" 	name="content">
+										<%=diary.getContent() %>
 									</textarea>
 									<!-- <textarea id="ir1" class="w3-input w3-border" rows="10" cols="30"
 										style="width: 950px; height: 400px;" name="content">
@@ -116,10 +120,15 @@
 						
 						<!-- 전송 -->
 						<div class="w3-center" style="margin: 1%;">
-							<input class="w3-button w3-white" type="button" onclick="submitContents(this);" value="전송전송" />
-							<!-- <input class="w3-button w3-blue" type="submit" value="전송" /> -->
-							<input class="w3-button w3-blue" type="button" id="save" value="저장" />
+							<input class="w3-button w3-white" type="button" onclick="submitContents(this);" value="저장" />
+							&nbsp;
 							<input class="w3-button w3-yellow" type="button" value="취소" onClick = "history.back();"/>
+							
+							<input type="hidden" name="diaryid" value="<%= diaryid %>">
+							<input type="hidden" name="email" value="<%= diary.getEmail() %>">
+							<input type="hidden" name="num" value="<%= num %>">
+							<input type="hidden" name="pageNum" value="<%= pageNum %>">	
+							
 						</div>
 						
 					</div>
@@ -131,7 +140,7 @@
 		<!-- end. 상단 바, 사이드 바 간격 -->
 	</form>
 	<!-- end. form -->
-	
+	<% } catch (Exception e) {} %>
 </div>
 <script type="text/javascript">
 	var oEditors = [];
@@ -186,7 +195,7 @@
 	}
 </script>
 <!-- end. 전체 틀 div ★ --> 
-<% } catch (Exception e) {} %>
+
 </body>
 </html>
 

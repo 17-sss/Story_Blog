@@ -83,13 +83,19 @@
 								</div>
 							</div>
 							
-							<!-- 날짜 지정  or reg_date(고정으로) 활용  -->
+							<!-- 날짜   / 날짜 수정 불가..방법이.. -->
 							<div class="w3-row w3-section">
 								<div class="w3-content">
-				 					날짜
-									&nbsp;<input class="w3-input" name="cdate" type="date">
+				 					날짜 
+									&nbsp;<span class="w3-input w3-light-gray w3-text-gray" style="font-size: 9pt;">현재 시간으로 등록됩니다.</span>
 								</div>
 							</div>
+							<!-- <div class="w3-row w3-section">
+								<div class="w3-content">
+				 					날짜
+									&nbsp;<input class="w3-input" name="cdate" type="text" value="" readonly>
+								</div>
+							</div> -->
 							
 							<!-- 내용 (SE2) -->
 							<div class="w3-row w3-section">
@@ -111,9 +117,8 @@
 						
 						<!-- 전송 -->
 						<div class="w3-center" style="margin: 1%;">
-							<input class="w3-button w3-white" type="button" onclick="submitContents(this);" value="전송전송" />
-							<!-- <input class="w3-button w3-blue" type="submit" value="전송" /> -->
-							<input class="w3-button w3-blue" type="button" id="save" value="저장" />
+							<input class="w3-button w3-white" type="button" onclick="submitContents(this);" value="저장" />
+							&nbsp;
 							<input class="w3-button w3-yellow" type="button" value="취소" onClick = "history.back();"/>
 						</div>
 						

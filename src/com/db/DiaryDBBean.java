@@ -141,6 +141,7 @@ public class DiaryDBBean {
 					diary.setEmail(rs.getString("email"));
 					diary.setDiaryid(rs.getString("diaryid"));
 					diary.setSubject(rs.getString("subject"));
+					/*diary.setCdate(rs.getString("cdate"));*/
 					diary.setCdate(rs.getTimestamp("cdate"));
 					diary.setContent(rs.getString("content"));
 					diary.setIp(rs.getString("ip"));
@@ -178,6 +179,7 @@ public class DiaryDBBean {
 				diary.setEmail(rs.getString("email"));
 				diary.setDiaryid(rs.getString("diaryid"));
 				diary.setSubject(rs.getString("subject"));
+				/*diary.setCdate(rs.getString("cdate"));*/
 				diary.setCdate(rs.getTimestamp("cdate"));
 				diary.setContent(rs.getString("content"));
 				diary.setIp(rs.getString("ip"));
