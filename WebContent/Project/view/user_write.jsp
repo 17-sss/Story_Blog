@@ -7,16 +7,18 @@
 <%    
    	 	//제대로 utf-8환경이 아니라 한글 깨짐 그래서 임의로 추가                                                   
 	    request.setCharacterEncoding("EUC-KR");
-	    String subject = request.getParameter("subject");
-	    
+	   
 	    //콘솔 출력
+	    String subject = request.getParameter("subject");
 	    System.out.println("제목:"+subject);   
 %>
 <% 
 		int num=0;
 		String diaryid = request.getParameter("diaryid");
+		
 
 		if (diaryid==null) diaryid = "Main";
+		if (subject==null) subject = "제목없음";
 
 		if (request.getParameter("num")!=null) {
 			num = Integer.parseInt(request.getParameter("num"));
@@ -71,7 +73,7 @@
 							<div class="w3-row w3-section">
 								<div class="w3-content">
 				 					일기장 선택
-									&nbsp;<input class="w3-input" name="diaryid" type="text">
+									&nbsp;<input class="w3-input" name="diaryid" type="text" value="<%= diaryid%>">
 								</div>
 							</div>
 	

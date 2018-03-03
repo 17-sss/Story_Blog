@@ -171,7 +171,7 @@
             inputForm = eval("document.loginInfo");
             if(!inputForm.email.value)
             {
-                alert("아이디를 입력하세요");    
+                alert("이메일을 입력하세요");    
                 inputForm.email.focus();
                 return false;
             }

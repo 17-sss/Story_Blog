@@ -8,6 +8,7 @@
 <% request.setCharacterEncoding("EUC-KR"); %>
 
 <%  String diaryid = request.getParameter("diaryid");
+	String subject = request.getParameter("subject");
 	/* 
 	String email = request.getParameter("email"); == X 오답
 	diary.setEmail((String)session.getAttribute("sessionID"));  == X 오답 
@@ -16,6 +17,7 @@
 	(String)session.getAttribute("sessionID") 이걸 email 안에 쓰기. */
 	
 	if (diaryid==null) diaryid = "Main"; 
+	if (subject==null) subject = "하루의 끝";
 %>
 
 <%
@@ -70,9 +72,11 @@
 					<div class="w3-card w3-round w3-white">
 						<div class="w3-container w3-padding">
 							<h6 class="w3-text-gray">오늘 하루를 요약해보세요.</h6>
-							<input class="w3-input w3-border" name="subject" type="text" placeholder="하루의 끝"><br>
+							<input class="w3-input w3-border w3-text-grey" name="subject" type="text" style="font-size: 9pt;" value="<%=subject %>"><br>
 							<button type="submit" class="w3-button w3-theme w3-pink w3-right" 
 								onclick="location.href='/Story_Blog/Project/view/user_write.jsp'">글쓰기</button>
+								<input type="hidden" name="diaryid" value="<%= diaryid %>">
+								<input type="hidden" name="subject" value="<%= subject %>">
 						</div>
 					</div>
 				</div>
