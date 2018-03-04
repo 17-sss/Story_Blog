@@ -248,7 +248,28 @@ public class UserDBBean {
 			}
 		}	
     }*/
-
+    // 이메일 중복확인 ver.2
+    public boolean confirmEmail(String email) {
+    	Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+    	boolean result = false;
+    	try {
+    		conn = getConnection();
+    		String sql = "select email from userlist where email =?";
+    		pstmt = conn.prepareStatement(sql);
+    		pstmt.setString(1, email);
+    		rs = pstmt.executeQuery();
+    		if (rs.next()) {
+    			result = true;
+    		}
+    	} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, rs, pstmt);
+		}
+    	return result;
+    }
 	
     
     public int deleteUser (String email, String pwd) throws Exception {

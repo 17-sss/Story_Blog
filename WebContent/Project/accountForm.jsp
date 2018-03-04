@@ -8,6 +8,7 @@
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 	<title>Story Blog - Sign Up</title>
 	<% 
+		String email = request.getParameter("email");
 		int num=0;
 		
 		if (request.getParameter("num")!=null) {
@@ -77,6 +78,14 @@
 		document.userInfo.idDuplication.value = "idUncheck";
 	} */
 
+	function confirmEmail() {
+		if (document.userInfo.email.value == "") {
+			alert("이메일을 입력하세요. (중복확인)");
+			return;
+		}
+		url = "confirmEmail.jsp?id=" + document.userInfo.email.value;
+		open(url, "confirm", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeble=no, width=300, height=200");
+	}
 </script>
 
 
@@ -93,7 +102,12 @@ action="<%=request.getContextPath()%>/Project/accountPro.jsp" onsubmit="return c
 <div class="w3-row w3-section">
   <div class="w3-col" style="width:50px"></div>
     <div class="w3-rest">
+    
       <input class="w3-input w3-border"  name="email" type="email" placeholder="E-mail (ID)*">	
+      <%-- <input type="hidden" name="email" value="<%= email %>"> --%>
+      <input type="button" value="중복확인" onclick="confirmEmail(this.form)">
+      
+      
      <!-- <input class="w3-input w3-border"  name="email" type="email" placeholder="E-mail (ID)*" onkeydown="inputIdChk()">
      	  <input type="button" value="중복확인" onclick="openIdChk()">
       	  <input type="hidden" name="idDuplication" value="idUncheck"> -->
