@@ -107,7 +107,6 @@ action="<%=request.getContextPath()%>/Project/accountPro.jsp" onsubmit="return c
       <%-- <input type="hidden" name="email" value="<%= email %>"> --%>
       <input type="button" value="중복확인" onclick="confirmEmail(this.form)">
       
-      
      <!-- <input class="w3-input w3-border"  name="email" type="email" placeholder="E-mail (ID)*" onkeydown="inputIdChk()">
      	  <input type="button" value="중복확인" onclick="openIdChk()">
       	  <input type="hidden" name="idDuplication" value="idUncheck"> -->
