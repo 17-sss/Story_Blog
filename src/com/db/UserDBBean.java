@@ -217,6 +217,37 @@ public class UserDBBean {
         	 close(conn, null, pstmt);
         }
     } // end loginCheck()
+    
+    
+   /* // 이메일 중복체크
+    public boolean duplicateIdCheck(String email) {
+    	Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean x = false;
+    	
+		try {
+            StringBuffer query = new StringBuffer();
+            query.append("select email from userlist where email=?");
+            
+            conn = getConnection();
+            pstmt = conn.prepareStatement(query.toString());
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+            
+            if(rs.next()) x= true; //해당 이메일 존재
+            
+            return x;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				close(conn, null, pstmt);
+			} catch (Exception e2) {
+				throw new RuntimeException(e2.getMessage());
+			}
+		}	
+    }*/
 
 	
     
@@ -271,35 +302,4 @@ public class UserDBBean {
 		
 	}
     
-    // 관리자..?
-    /*public boolean admin_login(String admin_id,String admin_pass){
-    	Connection conn = null;
-    	PreparedStatement pstmt = null;
-    	ResultSet rs = null;
-    	
-    	boolean b = false;
-		
-		try {
-			String sql = "select * from userlist where email = 'admin' and pwd = 9005242";
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, admin_id);
-			pstmt.setString(2, admin_pass);
-			rs = pstmt.executeQuery();
-			b=rs.next();
-		} catch (Exception e) {
-			System.out.println("admin_login err : " + e);
-		} finally {
-			try {
-				if(rs!=null)rs.close();
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				close(conn, rs, pstmt);
-			}
-		}
-		return b;
-	}*/
 }
