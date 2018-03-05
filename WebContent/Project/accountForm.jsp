@@ -83,7 +83,7 @@
 			alert("이메일을 입력하세요. (중복확인)");
 			return;
 		}
-		url = "confirmEmail.jsp?id=" + document.userInfo.email.value;
+		url = "confirmEmail.jsp?email=" + document.userInfo.email.value;
 		open(url, "confirm", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeble=no, width=300, height=200");
 	}
 </script>
