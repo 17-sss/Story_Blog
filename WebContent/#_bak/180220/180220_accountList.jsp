@@ -7,6 +7,7 @@
 <% request.setCharacterEncoding("EUC-KR"); %>
 <% String listid = request.getParameter("listid");
 	if (listid==null) listid = "1"; %>
+
 <%
 	int pageSize= 10;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -22,12 +23,13 @@
 	int number = 0;
 	List usList = null;
 	UserDBBean dbPro = UserDBBean.getInstance();
-	count = dbPro.getUserCount(listid);
+	/*  에러나서 주석처리  */
+	/* count = dbPro.getUserCount(listid);
 	//게시판에 있는 글 수 count
 	if (count > 0) {
 		usList = dbPro.getUsers(startRow, endRow, listid); 
 	}
-	number = count - (currentPage - 1) * pageSize;
+	number = count - (currentPage - 1) * pageSize; */
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -92,8 +94,8 @@
                	<td align="center" width="100">
                		<!-- 수정 삭제 만들기  -->
   					<input type="submit" class="w3-button w3-white w3-hover-white" value="수정">
-					<input type="button" class="w3-button w3-pink w3-hover-pink"
-					value="삭제" onclick="document.location.href='deleteForm.jsp?num=<%=user.getNum()%>&pageNum=<%=pageNum%>'">
+					<%-- <input type="button" class="w3-button w3-pink w3-hover-pink"
+					value="삭제" onclick="document.location.href='deleteForm.jsp?num=<%=user.getNum()%>&pageNum=<%=pageNum%>'"> --%>
                		
                	</td>
                 

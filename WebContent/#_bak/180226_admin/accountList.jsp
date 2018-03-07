@@ -22,12 +22,13 @@
 	int number = 0;
 	List usList = null;
 	UserDBBean dbPro = UserDBBean.getInstance();
-	count = dbPro.getUserCount(listid);
+	/* 에러나서 주석처리 */
+	/* count = dbPro.getUserCount(listid);
 	//게시판에 있는 글 수 count
 	if (count > 0) {
 		usList = dbPro.getUsers(startRow, endRow, listid); 
 	}
-	number = count - (currentPage - 1) * pageSize;
+	number = count - (currentPage - 1) * pageSize; */
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
