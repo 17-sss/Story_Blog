@@ -84,7 +84,7 @@
 				<input type="hidden" name="email" value="<%= user.getEmail() %>">
 				<input type="hidden" name="pwd" value="<%= user.getPwd() %>">
 				<input type="hidden" name="pageNum" value="<%= pageNum %>">
-				<%-- <input type="hidden" name="num" value="<%=user.getNum() %>"> 오류 안보이게하려고 주석처리. --%>
+				<%-- <input type="hidden" name="num" value="<%=user.getNum() %>"> 오류 안보이게하려고 주석처리.. --%>
 				
 				<input type="submit" value="Send" class="w3-button w3-large w3-pink">
 			</div>
